@@ -185,7 +185,7 @@ BUILD_SHARED_LIBS = os.environ.get("AMREX_BUILD_SHARED_LIBS", "OFF")
 # CMake dependency control (developers & package managers)
 AMReX_src = os.environ.get("AMREX_SRC")
 AMReX_internal = os.environ.get("AMREX_INTERNAL", "ON")
-AMReX_repo = os.environ.get("AMREX_REPO", "https://github.com/AMReX-Codes/amrex.git")
+AMReX_repo = os.environ.get("AMREX_REPO", "https://github.com/WeiqunZhang/amrex.git")
 AMReX_branch = os.environ.get("AMREX_BRANCH")
 pybind11_internal = os.environ.get("PYBIND11_INTERNAL", "ON")
 
