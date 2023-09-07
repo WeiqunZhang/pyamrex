@@ -41,6 +41,10 @@ jobs:
         $Env:CCACHE_MAXSIZE='300M'
         ccache -z
 
+        $Env:VCVARSALL="C:\Program Files\Microsoft Visual Studio\2022\Enterprise\vc\Auxiliary\build\vcvarsall.bat"
+        $Env:VCVARSPLATFORM="x64"
+        $Env:VCVARSVERSION="14.36.32532"
+
         python3 -m pip install -U pip setuptools wheel pytest
         python3 -m pip install -U cmake
         python3 -m pip install -r requirements.txt
