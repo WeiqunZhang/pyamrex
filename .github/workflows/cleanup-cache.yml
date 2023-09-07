@@ -54,6 +54,7 @@ jobs:
           echo "xxx cached_jobs=${cached_jobs}xxx\n"
 
           # cached_jobs is something like "ccache-LinuxClang-configure-1d ccache-LinuxClang-configure-2d".
+          # It might also contain spaces. Thus we set IFS to \n.
           IFS=$'\n'
           for j in $cached_jobs
           do
