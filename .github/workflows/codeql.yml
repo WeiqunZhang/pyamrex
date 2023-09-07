@@ -77,7 +77,7 @@ jobs:
         run: |
           export CCACHE_COMPRESS=1
           export CCACHE_COMPRESSLEVEL=10
-          export CCACHE_MAXSIZE=30M
+          export CCACHE_MAXSIZE=300M
           ccache -z
 
           $CMAKE --build build -j 2
