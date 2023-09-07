@@ -59,6 +59,7 @@ jobs:
     if: github.event.pull_request.draft == false
     steps:
     - uses: actions/checkout@v3
+    - uses: seanmiddleditch/gha-setup-ninja@master
     - name: Set Up Cache
       uses: actions/cache@v3
       with:
@@ -91,6 +92,7 @@ jobs:
         python3 -m pip install -r requirements.txt
 
         cmake -S . -B build               `
+              -G "Ninja"                  `
               -T "ClangCl"                `
               -DCMAKE_VERBOSE_MAKEFILE=ON `
               -DBUILD_SHARED_LIBS=ON      `
