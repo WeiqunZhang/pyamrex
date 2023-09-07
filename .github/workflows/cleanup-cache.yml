@@ -27,7 +27,7 @@ jobs:
           EVENT=${{ github.event.workflow_run.event }}
 
           # Triggering workflow run name (e.g., LinuxClang)
-          WORKFLOW_NAME=${{ github.event.workflow_run.name }}
+          WORKFLOW_NAME="${{ github.event.workflow_run.name }}"
 
           if [[ $EVENT == "pull_request" ]]; then
             gh run download ${{ github.event.workflow_run.id }} -n pr_number
@@ -45,7 +45,7 @@ jobs:
           # The goal is to keep the last used key of each job and delete all others.
 
           # something like ccache-LinuxClang-
-          keyprefix=ccache-${WORKFLOW_NAME}-
+          keyprefix="ccache-${WORKFLOW_NAME}-"
 
           echo "xxx keyprefix=${keyprefix}xxx\n"
 
