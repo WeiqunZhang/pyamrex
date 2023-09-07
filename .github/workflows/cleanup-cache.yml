@@ -47,25 +47,16 @@ jobs:
           # something like ccache-LinuxClang-
           keyprefix="ccache-${WORKFLOW_NAME}-"
 
-          echo "xxx keyprefix=${keyprefix}xxx\n"
-
           cached_jobs=$(gh actions-cache list -L 100 -R $REPO -B $BRANCH --key "$keyprefix" | awk -F '-git-' '{print $1}' | sort | uniq)
-
-          echo "xxx cached_jobs=${cached_jobs}xxx\n"
 
           # cached_jobs is something like "ccache-LinuxClang-configure-1d ccache-LinuxClang-configure-2d".
           # It might also contain spaces. Thus we set IFS to \n.
           IFS=$'\n'
           for j in $cached_jobs
           do
-            echo "xxx j=${j}xxx\n"
             old_keys=$(gh actions-cache list -L 100 -R $REPO -B $BRANCH --key "${j}-git-" --sort last-used | cut -f 1 | tail -n +2)
-
-            echo "xxx old_keys=${old_keys}xxx\n"
-
             for k in $old_keys
             do
-              echo "xxx k=${k}xxx\n"
               gh actions-cache delete "$k" -R $REPO -B $BRANCH --confirm
             done
           done
