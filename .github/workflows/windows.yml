@@ -59,6 +59,13 @@ jobs:
     if: github.event.pull_request.draft == false
     steps:
     - uses: actions/checkout@v3
+    - name: Set Up Cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.ccache
+        key: ccache-${{ github.workflow }}-${{ github.job }}-git-${{ github.sha }}
+        restore-keys: |
+             ccache-${{ github.workflow }}-${{ github.job }}-git-
     - uses: actions/setup-python@v4
       with:
         python-version: '3.x'
