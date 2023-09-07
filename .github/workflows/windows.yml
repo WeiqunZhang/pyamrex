@@ -13,11 +13,32 @@ jobs:
     if: github.event.pull_request.draft == false
     steps:
     - uses: actions/checkout@v3
+    - name: Set Up Cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.ccache
+        key: ccache-${{ github.workflow }}-${{ github.job }}-git-${{ github.sha }}
+        restore-keys: |
+             ccache-${{ github.workflow }}-${{ github.job }}-git-
     - uses: actions/setup-python@v4
       with:
         python-version: '3.x'
+    - name: Install Ccache
+      run: |
+        Invoke-WebRequest https://github.com/ccache/ccache/releases/download/v4.8/ccache-4.8-windows-x86_64.zip -OutFile ccache-4.8-windows-x86_64.zip
+        Expand-Archive ccache-4.8-windows-x86_64.zip
     - name: Build & Install
       run: |
+        $ccachepath = Join-Path $pwd "ccache-4.8-windows-x86_64"
+        $Env:PATH += ";$ccachepath"
+        $ccachecachedir = Join-Path $HOME ".ccache"
+        $Env:CCACHE_DIR="$ccachecachedir"
+        $Env:CCACHE_DIR
+        $Env:CCACHE_COMPRESS='1'
+        $Env:CCACHE_COMPRESSLEVEL='10'
+        $Env:CCACHE_MAXSIZE='300M'
+        ccache -z
+
         python3 -m pip install -U pip pytest
         python3 -m pip install -v .
         if(!$?) { Exit $LASTEXITCODE }
@@ -25,6 +46,9 @@ jobs:
         python3 -c "import amrex.space1d as amr; print(amr.__version__)"
         python3 -c "import amrex.space2d as amr; print(amr.__version__)"
         python3 -c "import amrex.space3d as amr; print(amr.__version__)"
+
+        ccache -s
+
     - name: Unit tests
       shell: cmd
       run: python3 -m pytest tests
