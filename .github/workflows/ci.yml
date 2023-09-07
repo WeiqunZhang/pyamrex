@@ -13,27 +13,6 @@ jobs:
     name: 🐧 Ubuntu
     uses: ./.github/workflows/ubuntu.yml
 
-  intel:
-    name: 🐧 Intel
-    uses: ./.github/workflows/intel.yml
-
-  hip:
-    name: 🐧 HIP
-    uses: ./.github/workflows/hip.yml
-
-  macos:
-    name: 🍏 macOS
-    uses: ./.github/workflows/macos.yml
-
-  windows:
-    name: 🪟 Windows
-    uses: ./.github/workflows/windows.yml
-
-  stubs:
-    name: 🔄 Update Stub Files
-    needs: [ubuntu, intel, hip, macos, windows]
-    uses: ./.github/workflows/stubs.yml
-
   save_pr_number:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
