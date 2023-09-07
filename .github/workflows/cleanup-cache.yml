@@ -63,7 +63,7 @@ jobs:
 
             echo "xxx old_keys=${old_keys}xxx\n"
 
-            for k in "$old_keys"
+            for k in $old_keys
             do
               echo "xxx k=${k}xxx\n"
               gh actions-cache delete "$k" -R $REPO -B $BRANCH --confirm
