@@ -13,12 +13,6 @@
 #include <optional>
 #include <vector>
 
-#if (AMREX_SPACEDIM == 3)
-namespace {
-    using pyamrex_realvect_crossproduct_f = amrex::RealVect (amrex::RealVect::*)(const amrex::RealVect&) const noexcept;
-}
-#endif
-
 void init_RealVect(py::module &m) {
     using namespace amrex;
 
@@ -98,7 +92,10 @@ void init_RealVect(py::module &m) {
           .def(py::self * py::self)
           .def("dotProduct", &RealVect::dotProduct, "Return dot product of this vector with another")
 #if (AMREX_SPACEDIM == 3)
-          .def("crossProduct", static_cast<pyamrex_realvect_crossproduct_f>(&amrex::RealVect::crossProduct), "Return cross product of this vector with another")
+          .def("crossProduct",
+               static_cast<amrex::RealVect (amrex::RealVect::*)(const amrex::RealVect&) const noexcept>
+                   (&amrex::RealVect::crossProduct),
+               "Return cross product of this vector with another")
 #endif
           .def("__mul__",
                py::overload_cast<Real>(&RealVect::operator*, py::const_))
