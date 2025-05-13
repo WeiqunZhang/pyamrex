@@ -93,8 +93,7 @@ void init_RealVect(py::module &m) {
           .def("dotProduct", &RealVect::dotProduct, "Return dot product of this vector with another")
 #if (AMREX_SPACEDIM == 3)
           .def("crossProduct",
-               static_cast<amrex::RealVect (amrex::RealVect::*)(const amrex::RealVect&) const noexcept>
-                   (&amrex::RealVect::crossProduct),
+               (RealVect (RealVect::*)(const RealVect&) const noexcept)(&RealVect::crossProduct),
                "Return cross product of this vector with another")
 #endif
           .def("__mul__",
